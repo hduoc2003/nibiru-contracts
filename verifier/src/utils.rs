@@ -70,7 +70,13 @@ pub fn verify_proof(
         ic_x,
         ic_y,
     } = extra_proof;
-    let Groth16Proof { p_a, p_b, p_c } = groth_proof;
+
+    let Groth16Proof { 
+        p_a, 
+        p_b, 
+        p_c 
+    } = groth_proof;
+    
     // Validate that all evaluations ∈ F
     for x in pub_signals {
         ensure!(x < r, ContractError::NotInScalarField(*x));
@@ -84,6 +90,7 @@ pub fn verify_proof(
         ContractError::MalformedProof
     );
     ensure_eq!(ic_x.len(), ic_y.len(), ContractError::MalformedProof);
+    
     let mut vk_x = g1_from_xy(&ic_x[0], &ic_y[0])?;
     for i in 1..ic_x.len() {
         let tmp = g1_from_xy(&ic_x[i], &ic_y[i])?.into_affine();
