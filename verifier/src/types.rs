@@ -7,7 +7,7 @@ pub type ScalarField = Fr;
 
 #[cw_serde]
 pub struct Groth16Proof {
-    pub p_a: [Uint256; 2],
-    pub p_b: [[Uint256; 2]; 2],
-    pub p_c: [Uint256; 2]
+    pub pi_a: [Uint256; 2],
+    pub pi_b: [[Uint256; 2]; 2],
+    pub pi_c: [Uint256; 2]
 }
