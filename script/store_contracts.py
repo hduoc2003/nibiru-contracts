@@ -8,6 +8,8 @@ from time import sleep
 def run_command(command: str) -> str:
     print(command)
     res = subprocess.run(command, capture_output=True, text=True ,shell=True)
+    if (res.stdout == ""):
+        raise Exception(res.stderr)
     return res.stdout
 
 
@@ -43,10 +45,10 @@ for (i, contract) in enumerate(contracts):
     save(contract_name, "store.json", store_response)
 
     store_response = json.loads(store_response)
-    sleep(5)
     tx_hash = store_response['txhash']
 
-    # tx_hash = "70A68683694E54F1FC8B851AA51714D2E15B469A8C600C18837D5348B8BC95A5"
+    sleep(5)
+    # tx_hash = "07D2E3A0209A4030CCE08BADEDA05264880645E6A450543F547462157B91CFCE"
     q_tx = run_command(f"nibid q tx {tx_hash}")
     save(contract_name, "txhash.json", q_tx)
 
@@ -61,8 +63,8 @@ for (i, contract) in enumerate(contracts):
         --gas-adjustment 1.5 \
         --gas-prices 0.025unibi \
         --yes"))['txhash']
-    sleep(5)
     # txhash_init = "9F49AAE881D83767903ACEB382AA4B19CAB044E6906B96A3FDD93DEF322C3702"
+    sleep(5)
     contract_address = json.loads(run_command(f"nibid q tx {txhash_init}"))['logs'][0]['events'][1]['attributes'][0]['value']
 
     print({

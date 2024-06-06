@@ -70,7 +70,7 @@ pub fn verify_proof(
         ic_x,
         ic_y,
     } = extra_proof;
-    let Groth16Proof { p_a, p_b, p_c } = groth_proof;
+    let Groth16Proof { pi_a, pi_b, pi_c } = groth_proof;
     // Validate that all evaluations ∈ F
     for x in pub_signals {
         ensure!(x < r, ContractError::NotInScalarField(*x));
@@ -91,13 +91,13 @@ pub fn verify_proof(
     }
 
     // compute
-    let a = g1_from_xy(&p_a[0], &p_a[1])?;
-    let b = g2_from_xy(&p_b[0][0], &p_b[0][1], &p_b[1][0], &p_b[1][1])?;
+    let a = g1_from_xy(&pi_a[0], &pi_a[1])?;
+    let b = g2_from_xy(&pi_b[0][0], &pi_b[0][1], &pi_b[1][0], &pi_b[1][1])?;
     let alpha = g1_from_xy(alphax, alphay)?;
     let beta = g2_from_xy(betax2, betax1, betay2, betay1)?;
     let mut gamma_neg = g2_from_xy(gammax2, gammax1, gammay2, gammay1)?;
     gamma_neg.negate();
-    let c = g1_from_xy(&p_c[0], &p_c[1])?;
+    let c = g1_from_xy(&pi_c[0], &pi_c[1])?;
     let mut delta_neg = g2_from_xy(deltax2, deltax1, deltay2, deltay1)?;
     delta_neg.negate();
 
