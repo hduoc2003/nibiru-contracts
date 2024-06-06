@@ -1,0 +1,3 @@
+[submodule "cw-nfts"]
+	path = cw-nfts
+	url = https://github.com/bjergsen243/cw-nfts
